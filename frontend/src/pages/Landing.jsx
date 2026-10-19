@@ -1,0 +1,83 @@
+import { Link } from 'react-router-dom';
+import SearchBar from '../components/SearchBar';
+import HowItWorks from '../components/HowItWorks';
+import { crawlApi } from '../api/client';
+import { useState, useEffect } from 'react';
+
+export default function Landing() {
+  const [hasPages, setHasPages] = useState(null);
+
+  useEffect(() => {
+    crawlApi.getPages({ limit: 1 })
+      .then((res) => setHasPages(res.data.data.length > 0))
+      .catch(() => setHasPages(false));
+  }, []);
+
+  return (
+    <div className="max-w-4xl mx-auto px-4 sm:px-6 pt-10 sm:pt-16 lg:pt-20 pb-16 sm:pb-24">
+      <div className="text-center mb-8 sm:mb-10 animate-fade-in">
+        <p className="inline-flex items-center gap-2 rounded-full border border-teal-200 bg-teal-50 px-3 py-1 text-xs font-medium text-teal-800 dark:border-teal-800 dark:bg-teal-950 dark:text-teal-200 mb-5">
+          <span className="h-1.5 w-1.5 rounded-full bg-teal-600 dark:bg-teal-400" aria-hidden="true" />
+          Your personal web index
+        </p>
+        <h1 className="text-3xl sm:text-4xl lg:text-[2.75rem] font-semibold tracking-tight text-ink dark:text-ink-dark leading-tight">
+          Search<span className="text-teal-700 dark:text-teal-400">Sphere</span>
+        </h1>
+        <p className="text-ink-muted dark:text-ink-dark-muted text-sm sm:text-[15px] mt-3 sm:mt-4 leading-relaxed max-w-xl mx-auto px-2">
+          Collect the pages that matter. Find the answers faster.
+          Crawl websites and search your own focused collection.
+        </p>
+        <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-center gap-2 mt-6 sm:mt-7 max-w-xs sm:max-w-none mx-auto">
+          <Link to="/register" className="btn-primary px-5 py-2.5 sm:py-2">Sign up</Link>
+          <Link to="/login" className="btn-secondary px-5 py-2.5 sm:py-2">Sign in</Link>
+        </div>
+      </div>
+
+      {hasPages === false && (
+        <div className="info-banner mb-6 sm:mb-8 animate-fade-in">
+          <p className="text-sm text-ink dark:text-ink-dark leading-relaxed">
+            <span className="font-medium">SearchSphere can only search pages that have already been crawled.</span>
+            {' '}If this is your first time using the project, index a webpage first.
+          </p>
+          <Link to="/crawl" className="btn-primary text-sm mt-4 w-full sm:w-auto">
+            Crawl Your First Page
+          </Link>
+        </div>
+      )}
+
+      <div className="max-w-2xl mx-auto mb-10 sm:mb-14">
+        <SearchBar large />
+        <nav aria-label="Example searches" className="flex flex-wrap items-center justify-center gap-2 mt-4">
+          <span className="text-xs text-ink-muted dark:text-ink-dark-muted">Try a query:</span>
+          {['javascript', 'react AND node', '"machine learning"'].map((query) => (
+            <Link
+              key={query}
+              to={`/search?q=${encodeURIComponent(query)}`}
+              className="inline-flex items-center min-h-[44px] rounded-full border border-line dark:border-line-dark px-3 text-xs text-ink-muted dark:text-ink-dark-muted hover:border-teal-500 hover:text-teal-700 dark:hover:border-teal-400 dark:hover:text-teal-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-teal-600 transition-colors"
+            >
+              {query}
+            </Link>
+          ))}
+        </nav>
+        {hasPages === false && (
+          <p className="hint text-center mt-3 px-2">
+            No pages indexed yet — search will return empty results until you crawl.
+          </p>
+        )}
+      </div>
+
+      <div className="border-t border-line/80 dark:border-line-dark pt-10 sm:pt-14">
+        <HowItWorks />
+      </div>
+
+      {hasPages && (
+        <p className="text-center text-sm text-ink-muted dark:text-ink-dark-muted mt-10 px-2 animate-fade-in">
+          You have searchable pages.{' '}
+          <Link to="/crawl" className="link-subtle">Index more</Link>
+          {' · '}
+          <Link to="/dashboard" className="link-subtle">View analytics</Link>
+        </p>
+      )}
+    </div>
+  );
+}

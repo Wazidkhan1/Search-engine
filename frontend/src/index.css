@@ -1,0 +1,216 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    @apply scroll-smooth;
+  }
+
+  body {
+    @apply bg-page text-ink antialiased dark:bg-page-dark dark:text-ink-dark;
+    font-feature-settings: 'ss01', 'cv01';
+  }
+
+  ::selection {
+    @apply bg-ink text-page dark:bg-ink-dark dark:text-page-dark;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply inline-flex items-center justify-center px-4 py-2
+           bg-ink text-page text-sm font-medium rounded-lg
+           hover:bg-neutral-800 active:scale-[0.99]
+           dark:bg-ink-dark dark:text-page-dark dark:hover:bg-neutral-200
+           transition-all duration-150
+           focus:outline-none focus-visible:ring-2 focus-visible:ring-ink/20 focus-visible:ring-offset-2
+           dark:focus-visible:ring-white/20 dark:focus-visible:ring-offset-black
+           disabled:opacity-40 disabled:cursor-not-allowed disabled:active:scale-100;
+  }
+
+  .btn-secondary {
+    @apply inline-flex items-center justify-center px-4 py-2
+           bg-transparent text-ink text-sm font-medium rounded-lg
+           border border-line hover:bg-surface active:scale-[0.99]
+           dark:text-ink-dark dark:border-line-dark dark:hover:bg-surface-dark
+           transition-all duration-150
+           focus:outline-none focus-visible:ring-2 focus-visible:ring-ink/10
+           disabled:opacity-40 disabled:cursor-not-allowed;
+  }
+
+  .btn-ghost {
+    @apply inline-flex items-center justify-center px-2.5 py-1.5
+           text-sm text-ink-muted rounded-md
+           hover:text-ink hover:bg-surface
+           dark:text-ink-dark-muted dark:hover:text-ink-dark dark:hover:bg-surface-dark
+           transition-colors duration-150;
+  }
+
+  .input-field {
+    @apply w-full px-3.5 py-2.5 text-sm rounded-lg
+           bg-page border border-line text-ink
+           placeholder:text-ink-faint
+           dark:bg-surface-dark dark:border-line-dark dark:text-ink-dark
+           dark:placeholder:text-ink-dark-faint
+           focus:outline-none focus:ring-2 focus:ring-ink/10 focus:border-ink/30
+           dark:focus:ring-white/10 dark:focus:border-white/20
+           transition-shadow duration-150;
+  }
+
+  .card {
+    @apply bg-surface dark:bg-surface-dark
+           border border-line/80 dark:border-line-dark
+           rounded-xl shadow-soft dark:shadow-card-dark;
+  }
+
+  .card-flat {
+    @apply bg-surface dark:bg-surface-dark
+           border border-line/60 dark:border-line-dark
+           rounded-xl p-4 sm:p-5;
+  }
+
+  .card-pad {
+    @apply p-4 sm:p-5 lg:p-6;
+  }
+
+  .page-shell {
+    @apply max-w-6xl mx-auto px-4 sm:px-6 py-8 sm:py-12;
+  }
+
+  .page-header {
+    @apply mb-6 sm:mb-8 lg:mb-10;
+  }
+
+  .page-title {
+    @apply text-xl sm:text-2xl lg:text-[1.75rem] font-semibold tracking-tight text-ink dark:text-ink-dark;
+  }
+
+  .page-subtitle {
+    @apply text-sm text-ink-muted dark:text-ink-dark-muted mt-1 sm:mt-1.5 max-w-xl leading-relaxed;
+  }
+
+  .section-title {
+    @apply text-[11px] sm:text-[13px] font-medium uppercase tracking-wide text-ink-muted dark:text-ink-dark-muted mb-3 sm:mb-4;
+  }
+
+  .nav-link {
+    @apply text-sm text-ink-muted hover:text-ink
+           dark:text-ink-dark-muted dark:hover:text-ink-dark
+           transition-colors duration-150;
+  }
+
+  .nav-link-active {
+    @apply text-ink dark:text-ink-dark font-medium;
+  }
+
+  .skeleton {
+    @apply animate-pulse bg-line/60 dark:bg-line-dark rounded-md;
+  }
+
+  .badge {
+    @apply inline-flex items-center px-2 py-0.5 rounded-md text-[11px] font-medium
+           bg-page border border-line text-ink-muted
+           dark:bg-page-dark dark:border-line-dark dark:text-ink-dark-muted;
+  }
+
+  .badge-active {
+    @apply bg-ink text-page border-ink
+           dark:bg-ink-dark dark:text-page-dark dark:border-ink-dark;
+  }
+
+  .hint {
+    @apply text-xs text-ink-faint dark:text-ink-dark-faint leading-relaxed;
+  }
+
+  .link-subtle {
+    @apply text-ink-muted hover:text-ink underline-offset-2 hover:underline
+           dark:text-ink-dark-muted dark:hover:text-ink-dark
+           transition-colors;
+  }
+
+  .result-item {
+    @apply py-4 sm:py-5 border-b border-line/70 dark:border-line-dark last:border-0;
+  }
+
+  .empty-state {
+    @apply text-center py-10 sm:py-14 px-4 sm:px-6;
+  }
+
+  .touch-target {
+    @apply min-h-[44px] min-w-[44px];
+  }
+
+  .safe-bottom {
+    @apply pb-[env(safe-area-inset-bottom,0px)];
+  }
+
+  .animate-fade-in {
+    animation: fadeIn 0.35s ease-out both;
+  }
+
+  .info-banner {
+    @apply card-flat border-ink/10 dark:border-ink-dark/10 bg-surface/80 dark:bg-surface-dark/80;
+  }
+
+  .workflow-card {
+    @apply card-flat text-center sm:text-left flex flex-col items-center sm:items-start;
+  }
+
+  .workflow-step-num {
+    @apply inline-flex w-7 h-7 items-center justify-center rounded-full
+           bg-ink text-page dark:bg-ink-dark dark:text-page-dark
+           text-xs font-semibold;
+  }
+
+  .pipeline-list {
+    @apply list-none m-0 p-0;
+  }
+
+  .pipeline-item {
+    @apply flex gap-3;
+  }
+
+  .pipeline-marker {
+    @apply relative flex flex-col items-center flex-shrink-0 w-3 pt-1.5;
+  }
+
+  .pipeline-dot {
+    @apply w-2.5 h-2.5 rounded-full bg-ink dark:bg-ink-dark flex-shrink-0;
+  }
+
+  .pipeline-line {
+    @apply w-px flex-1 bg-line dark:bg-line-dark mt-1 min-h-[1.5rem];
+  }
+
+  .result-card {
+    @apply py-4 sm:py-5 px-2 -mx-2 rounded-xl border-b border-line/70 dark:border-line-dark last:border-0
+           transition-all duration-200
+           hover:bg-surface/60 dark:hover:bg-surface-dark/40 hover:shadow-soft dark:hover:shadow-card-dark;
+  }
+
+  .badge-key {
+    @apply inline-flex items-center px-2 py-0.5 rounded-md text-[11px] font-medium
+           bg-ink/5 border border-ink/15 text-ink dark:bg-ink-dark/10 dark:border-ink-dark/20 dark:text-ink-dark;
+  }
+
+  .success-panel {
+    @apply rounded-lg bg-surface dark:bg-surface-dark-hover border border-line/60 dark:border-line-dark px-4 py-4;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+mark {
+  @apply bg-amber-100/90 text-inherit px-1 py-0.5 rounded font-semibold
+         dark:bg-amber-500/25 dark:text-ink-dark;
+}
